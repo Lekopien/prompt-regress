@@ -1,0 +1,13 @@
+[project]
+name = "promptregress"
+version = "0.1.0"
+description = "Regression tests for prompts: run suites against LLMs and fail CI when quality drops."
+requires-python = ">=3.10"
+dependencies = ["anthropic>=0.40", "pyyaml>=6.0"]
+
+[project.scripts]
+promptregress = "promptregress.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
