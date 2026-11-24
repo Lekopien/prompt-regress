@@ -32,11 +32,11 @@ def check_llm_judge(output: str, value: str, judge_model: str = JUDGE_MODEL_DEFA
     client = anthropic.Anthropic()
     msg = client.messages.create(
         model=judge_model,
-        max_tokens=200,
+        max_tokens=1000,
         system="You grade LLM outputs against a criterion. Reply with PASS or FAIL on the first line, then one short sentence of reasoning.",
         messages=[{"role": "user", "content": f"Criterion: {value}\n\nOutput to grade:\n{output}"}],
     )
-    text = msg.content[0].text.strip()
+    text = "".join(b.text for b in msg.content if b.type == "text").strip()
     return text.upper().startswith("PASS"), f"judge: {text[:160]}"
 
 

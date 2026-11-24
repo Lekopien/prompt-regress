@@ -24,11 +24,11 @@ def run_prompt(client: anthropic.Anthropic, model: str, prompt: str, system: str
     kwargs = {"system": system} if system else {}
     msg = client.messages.create(
         model=model,
-        max_tokens=1000,
+        max_tokens=4000,
         messages=[{"role": "user", "content": prompt}],
         **kwargs,
     )
-    return msg.content[0].text
+    return "".join(b.text for b in msg.content if b.type == "text")
 
 
 def run_suite(suite: dict, models: list[str] | None = None) -> list[CaseResult]:
